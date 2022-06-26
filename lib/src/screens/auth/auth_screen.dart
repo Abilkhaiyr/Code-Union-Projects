@@ -8,8 +8,11 @@ class AuthScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
+      backgroundColor: const Color(0xFFE5E5E5),
       navigationBar: const CupertinoNavigationBar(
         middle: Text('Authorization'),
+        backgroundColor: CupertinoColors.white,
+        border: Border(),
       ),
       child: SafeArea(
         child: Column(
@@ -18,9 +21,20 @@ class AuthScreen extends StatelessWidget {
           children: [
             const CupertinoTextField(
               placeholder: 'Login or mail',
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 19),
+              decoration: BoxDecoration(color: CupertinoColors.white),
+            ),
+            Container(
+              height: 1,
+              color: const Color(0xFFE0E6ED),
+              margin: const EdgeInsets.symmetric(
+                horizontal: 16,
+              ),
             ),
             const CupertinoTextField(
               placeholder: 'password',
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 19),
+              decoration: BoxDecoration(color: CupertinoColors.white),
             ),
             const SizedBox(
               height: 32,
@@ -29,7 +43,7 @@ class AuthScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: CupertinoButton(
                 padding: const EdgeInsets.symmetric(vertical: 20),
-                color: Color(0xFF4631D2),
+                color: const Color(0xFF4631D2),
                 child: const Text(
                   'Log in',
                   style: TextStyle(fontWeight: FontWeight.bold),
@@ -44,7 +58,7 @@ class AuthScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: CupertinoButton(
                 padding: const EdgeInsets.symmetric(vertical: 20),
-                color: Color(0xFF4631D2),
+                color: const Color(0xFF4631D2),
                 child: const Text('Sign in',
                     style: TextStyle(fontWeight: FontWeight.bold)),
                 onPressed: () {},
