@@ -14,20 +14,41 @@ class AuthScreen extends StatelessWidget {
       child: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            CupertinoTextField(
+            const CupertinoTextField(
               placeholder: 'Login or mail',
             ),
-            CupertinoTextField(
+            const CupertinoTextField(
               placeholder: 'password',
             ),
-            CupertinoButton.filled(
-              child: Text('Log in'),
-              onPressed: () {},
+            const SizedBox(
+              height: 32,
             ),
-            CupertinoButton.filled(
-              child: Text('Sign in'),
-              onPressed: () {},
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: CupertinoButton(
+                padding: const EdgeInsets.symmetric(vertical: 20),
+                color: Color(0xFF4631D2),
+                child: const Text(
+                  'Log in',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                onPressed: () {},
+              ),
+            ),
+            const SizedBox(
+              height: 19,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: CupertinoButton(
+                padding: const EdgeInsets.symmetric(vertical: 20),
+                color: Color(0xFF4631D2),
+                child: const Text('Sign in',
+                    style: TextStyle(fontWeight: FontWeight.bold)),
+                onPressed: () {},
+              ),
             ),
           ],
         ),
