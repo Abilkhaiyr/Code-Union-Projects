@@ -1,4 +1,6 @@
 import 'package:flutter/cupertino.dart';
+import 'package:test_app/src/router/router.dart';
+import 'package:test_app/src/screens/auth/auth_screen.dart';
 import 'package:test_app/src/screens/auth/register/register_screen.dart';
 
 void main() {
@@ -11,7 +13,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const CupertinoApp(
-      home: RegisterScreen(),
+      debugShowCheckedModeBanner: false,
+      onGenerateRoute: AppRouter.generateRoute,
+      home: AuthScreen(),
     );
   }
 }

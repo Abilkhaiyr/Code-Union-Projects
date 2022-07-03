@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables
 
 import 'package:flutter/cupertino.dart';
+import 'package:test_app/src/router/routing_const.dart';
 
 class AuthScreen extends StatelessWidget {
   const AuthScreen({Key? key}) : super(key: key);
@@ -61,7 +62,9 @@ class AuthScreen extends StatelessWidget {
                 color: const Color(0xFF4631D2),
                 child: const Text('Sign in',
                     style: TextStyle(fontWeight: FontWeight.bold)),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, RegisterRoute);
+                },
               ),
             ),
           ],
