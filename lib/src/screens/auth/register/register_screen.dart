@@ -2,8 +2,8 @@
 
 import 'package:flutter/cupertino.dart';
 
-class Register extends StatelessWidget {
-  const Register({Key? key}) : super(key: key);
+class RegisterScreen extends StatelessWidget {
+  const RegisterScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +70,7 @@ class Register extends StatelessWidget {
                     ),
                   ),
                   CupertinoTextField(
-                    obscureText: isVisible,
+                    obscureText: true,
                     placeholder: 'Password',
                     padding: const EdgeInsets.symmetric(
                         vertical: 19, horizontal: 16),
@@ -92,7 +92,7 @@ class Register extends StatelessWidget {
             ),
             const Spacer(),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 56),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               child: CupertinoButton(
                 onPressed: () {},
                 color: const Color(0xFF4631D2),
@@ -101,6 +101,9 @@ class Register extends StatelessWidget {
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
               ),
+            ),
+            const SizedBox(
+              height: 32,
             ),
           ],
         ),
