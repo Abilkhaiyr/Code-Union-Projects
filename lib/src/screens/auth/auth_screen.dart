@@ -39,6 +39,29 @@ class AuthScreen extends StatelessWidget {
                     ),
                   ],
                 )),
+              color: CupertinoColors.white,
+              child: Column(
+                children: [
+                  const CupertinoTextField(
+                    placeholder: 'Login or email',
+                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 19),
+                    decoration: BoxDecoration(color: CupertinoColors.white),
+                  ),
+                  Container(
+                    height: 1,
+                    color: const Color(0xFFE0E6ED),
+                    margin: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                    ),
+                  ),
+                  const CupertinoTextField(
+                    placeholder: 'Password',
+                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 19),
+                    decoration: BoxDecoration(color: CupertinoColors.white),
+                  ),
+                ],
+              ),
+            ),
             const SizedBox(
               height: 32,
             ),
