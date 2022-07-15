@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:test_app/src/screens/auth/auth_screen.dart';
+import 'package:test_app/src/screens/lenta/lenta_screen.dart';
 import 'package:test_app/src/screens/profile/profile_screen.dart';
 import 'package:test_app/src/screens/register/register_screen.dart';
 
@@ -10,7 +11,7 @@ class MainScreen extends StatelessWidget {
     return CupertinoTabScaffold(
         tabBar: CupertinoTabBar(
           items: const [
-            BottomNavigationBarItem(icon: Icon(CupertinoIcons.home)),
+            BottomNavigationBarItem(icon: Icon(CupertinoIcons.bars)),
             BottomNavigationBarItem(icon: Icon(CupertinoIcons.gift)),
             BottomNavigationBarItem(icon: Icon(CupertinoIcons.person)),
             BottomNavigationBarItem(icon: Icon(CupertinoIcons.person_circle)),
@@ -20,7 +21,7 @@ class MainScreen extends StatelessWidget {
           return CupertinoTabView(builder: (context) {
             switch (index) {
               case 0:
-                return const AuthScreen();
+                return const LentaScreen();
               case 1:
                 return const RegisterScreen();
               case 2:
