@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables
 
 import 'package:flutter/cupertino.dart';
+import 'package:test_app/src/common/constants/color_constants.dart';
+import 'package:test_app/src/common/constants/padding_constants.dart';
 import 'package:test_app/src/router/routing_const.dart';
 
 class AuthScreen extends StatelessWidget {
@@ -9,10 +11,10 @@ class AuthScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
-      backgroundColor: const Color(0xFFE5E5E5),
+      backgroundColor: AppColors.scaffoldBackground,
       navigationBar: const CupertinoNavigationBar(
         middle: Text('Authorization'),
-        backgroundColor: CupertinoColors.white,
+        backgroundColor: AppColors.white,
         border: Border(),
       ),
       child: SafeArea(
@@ -21,6 +23,22 @@ class AuthScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Container(
+                color: AppColors.white,
+                child: Column(
+                  children: [
+                    const CustomTextField(),
+                    Container(
+                      height: 1,
+                      color: AppColors.dividerLine,
+                      margin: AppPaddings.horizontal,
+                    ),
+                    const CupertinoTextField(
+                      placeholder: 'password',
+                      padding: AppPaddings.textFieldPaddings,
+                      decoration: BoxDecoration(color: AppColors.white),
+                    ),
+                  ],
+                )),
               color: CupertinoColors.white,
               child: Column(
                 children: [
@@ -48,10 +66,10 @@ class AuthScreen extends StatelessWidget {
               height: 32,
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+              padding: AppPaddings.horizontal,
               child: CupertinoButton(
-                padding: const EdgeInsets.symmetric(vertical: 20),
-                color: const Color(0xFF4631D2),
+                padding: AppPaddings.buttonPaddings,
+                color: AppColors.main,
                 child: const Text(
                   'Log in',
                   style: TextStyle(fontWeight: FontWeight.bold),
@@ -63,10 +81,10 @@ class AuthScreen extends StatelessWidget {
               height: 19,
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+              padding: AppPaddings.horizontal,
               child: CupertinoButton(
-                padding: const EdgeInsets.symmetric(vertical: 20),
-                color: const Color(0xFF4631D2),
+                padding: AppPaddings.buttonPaddings,
+                color: AppColors.main,
                 child: const Text('Sign in',
                     style: TextStyle(fontWeight: FontWeight.bold)),
                 onPressed: () {
@@ -77,6 +95,23 @@ class AuthScreen extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class CustomTextField extends StatelessWidget {
+  const CustomTextField({
+    Key? key,
+    this.placeholder = 'Login or email',
+  }) : super(key: key);
+
+  final String placeholder;
+  @override
+  Widget build(BuildContext context) {
+    return const CupertinoTextField(
+      placeholder: 'Login or mail',
+      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 19),
+      decoration: BoxDecoration(color: AppColors.white),
     );
   }
 }
