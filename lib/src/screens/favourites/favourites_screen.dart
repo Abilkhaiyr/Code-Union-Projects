@@ -1,33 +1,11 @@
 import 'package:flutter/cupertino.dart';
-import 'package:test_app/src/common/constants/color_constants.dart';
-import 'package:test_app/src/common/constants/padding_constants.dart';
-import 'package:test_app/src/router/routing_const.dart';
 
-List a = [
-  "assets/images/image1.png",
-  "assets/images/image2.png",
-  "assets/images/image3.png",
-];
-List b = [
-  "Esentai Mall",
-  "Mega Center",
-  "Aport",
-];
-List des = [
-  "Один из крупнейших торговых центров в городе",
-  "Mega Center",
-  "Aport",
-];
+import '../../common/constants/color_constants.dart';
+import '../../common/constants/padding_constants.dart';
 
-List c = [
-  "Аль-Фараби",
-  "Розыбакиев",
-  "Ташкентская",
-];
+class FavouritesScreen extends StatelessWidget {
+  const FavouritesScreen({Key? key}) : super(key: key);
 
-// ignore: must_be_immutable
-class LentaScreen extends StatelessWidget {
-  const LentaScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
@@ -42,12 +20,10 @@ class LentaScreen extends StatelessWidget {
               child: ListView.separated(
                 padding: AppPaddings.horizontal,
                 shrinkWrap: true,
-                itemCount: a.length,
+                itemCount: 1,
                 itemBuilder: (context, index) {
                   return GestureDetector(
-                    onTap: () {
-                      Navigator.pushNamed(context, DetailRoute);
-                    },
+                    onTap: () {},
                     child: Container(
                       height: 234,
                       decoration: BoxDecoration(
@@ -59,7 +35,7 @@ class LentaScreen extends StatelessWidget {
                           ClipRRect(
                             borderRadius: BorderRadius.circular(5),
                             child: Image.asset(
-                              a[index],
+                              'assets/images/image3.png',
                               fit: BoxFit.fill,
                               width: double.infinity,
                               height: 140,
@@ -78,18 +54,22 @@ class LentaScreen extends StatelessWidget {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
+                                    children: const [
                                       Text(
-                                        b[index],
-                                        style: const TextStyle(
+                                        "Esentai Mall",
+                                        style: TextStyle(
                                           fontWeight: FontWeight.w800,
                                           fontSize: 20,
                                         ),
                                       ),
-                                      Text(des[index]),
-                                      Text(c[index]),
+                                      Text(
+                                          "Один из крупнейших торговых центров в городе"),
+                                      Text("Аль-Фараби"),
                                     ],
                                   )),
+                                  const SizedBox(
+                                    width: 17,
+                                  ),
                                   const Icon(
                                     CupertinoIcons.heart_fill,
                                     color: CupertinoColors.systemRed,
