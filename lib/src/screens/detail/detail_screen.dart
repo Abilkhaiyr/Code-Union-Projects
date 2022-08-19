@@ -1,4 +1,6 @@
 import 'package:flutter/cupertino.dart';
+import 'package:test_app/src/common/constants/color_constants.dart';
+import 'package:test_app/src/router/routing_const.dart';
 
 class DetailScreen extends StatelessWidget {
   const DetailScreen({Key? key}) : super(key: key);
@@ -6,17 +8,35 @@ class DetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(
-        middle: const Text("Esentai Mall"),
-        backgroundColor: CupertinoColors.systemFill.withOpacity(0.3),
-      ),
       child: SafeArea(
         child: Column(
           children: [
-            Image.asset(
-              'assets/images/esentai_2.png',
-              fit: BoxFit.fitWidth,
-              width: double.maxFinite,
+            Stack(
+              children: [
+                Image.asset(
+                  'assets/images/esentai_2.png',
+                  fit: BoxFit.fitWidth,
+                  width: double.maxFinite,
+                ),
+                Column(
+                  children: [
+                    const SizedBox(height: 23),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        CupertinoButton(child: Icon(CupertinoIcons.back), onPressed: () async{
+                          Navigator.pushNamed(context, lentRoute);
+                        }),
+                       const Text(
+                          "Esentai Mall",
+                          style: TextStyle(color: AppColors.white),
+                        ),
+                        Icon(CupertinoIcons.heart),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
             ),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),

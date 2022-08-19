@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:test_app/src/common/constants/color_constants.dart';
 import 'package:test_app/src/common/constants/padding_constants.dart';
 import 'package:test_app/src/router/routing_const.dart';
+import 'package:test_app/src/screens/detail/detail_screen.dart';
 
 List a = [
   "assets/images/image1.png",
@@ -46,7 +48,12 @@ class LentaScreen extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return GestureDetector(
                     onTap: () {
-                      Navigator.pushNamed(context, DetailRoute);
+                      print('gfdg');
+                      Navigator.pushNamed(context, detailRoute);
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const DetailScreen()));
                     },
                     child: Container(
                       height: 234,

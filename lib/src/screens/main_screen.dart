@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:test_app/src/screens/auth/auth_screen.dart';
 import 'package:test_app/src/screens/detail/detail_screen.dart';
 import 'package:test_app/src/screens/favourites/favourites_screen.dart';
 import 'package:test_app/src/screens/lenta/lenta_screen.dart';
@@ -13,7 +14,7 @@ class MainScreen extends StatelessWidget {
         tabBar: CupertinoTabBar(
           items: const [
             BottomNavigationBarItem(icon: Icon(CupertinoIcons.bars)),
-            BottomNavigationBarItem(icon: Icon(CupertinoIcons.gift)),
+            BottomNavigationBarItem(icon: Icon(CupertinoIcons.map)),
             BottomNavigationBarItem(icon: Icon(CupertinoIcons.heart)),
             BottomNavigationBarItem(icon: Icon(CupertinoIcons.person_circle)),
           ],

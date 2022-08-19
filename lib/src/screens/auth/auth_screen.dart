@@ -1,13 +1,25 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables
-
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:test_app/src/common/constants/color_constants.dart';
 import 'package:test_app/src/common/constants/padding_constants.dart';
 import 'package:test_app/src/router/routing_const.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
-class AuthScreen extends StatelessWidget {
+class AuthScreen extends StatefulWidget {
   const AuthScreen({Key? key}) : super(key: key);
 
+
+  @override
+  State<AuthScreen> createState() => _AuthScreenState();
+}
+
+class _AuthScreenState extends State<AuthScreen> {
+  void requestMethod() async {
+  }
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
@@ -26,13 +38,17 @@ class AuthScreen extends StatelessWidget {
                 color: AppColors.white,
                 child: Column(
                   children: [
-                    const CustomTextField(),
+                    CustomTextField(
+                      controller: emailController,
+                      placeholder: 'Log in',
+                    ),
                     Container(
                       height: 1,
                       color: AppColors.dividerLine,
                       margin: AppPaddings.horizontal,
                     ),
-                    const CupertinoTextField(
+                    CupertinoTextField(
+                      controller: passwordController,
                       placeholder: 'password',
                       padding: AppPaddings.textFieldPaddings,
                       decoration: BoxDecoration(color: AppColors.white),
@@ -47,11 +63,41 @@ class AuthScreen extends StatelessWidget {
               child: CupertinoButton(
                 padding: AppPaddings.buttonPaddings,
                 color: AppColors.main,
+                onPressed: () async {
+                  print(emailController.text);
+                  final response =
+                  await http.get(Uri.https('jsonplaceholder.typicode.com', '/albums/1'));
+                  try {
+                    if (response.statusCode == 200) {
+                      final utfDecoded = utf8.decode(response.bodyBytes);
+                      print(utfDecoded);
+                    } else {
+                      print("print");
+                    }
+                    Navigator.pushReplacementNamed(context, mainRoute);
+                  }catch(e){
+                    showCupertinoModalPopup(
+                        context: context,
+                        builder: (context){
+                          return CupertinoAlertDialog(
+                              title: Text('Error'),
+                            content: Text('Wrong login and password'),
+                            actions: [
+                              CupertinoButton(
+                              child: Text('OK'),
+                              onPressed:() => Navigator.pop(context),
+                              ),
+                          ],
+                          );
+                        }
+                    );
+                    throw e;
+                  };
+                },
                 child: const Text(
                   'Log in',
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
-                onPressed: () {},
               ),
             ),
             const SizedBox(
@@ -64,8 +110,8 @@ class AuthScreen extends StatelessWidget {
                 color: AppColors.main,
                 child: const Text('Sign in',
                     style: TextStyle(fontWeight: FontWeight.bold)),
-                onPressed: () {
-                  Navigator.pushNamed(context, RegisterRoute);
+                onPressed: () async {
+                  Navigator.pushNamed(context, registerRoute);
                 },
               ),
             ),
@@ -79,16 +125,28 @@ class AuthScreen extends StatelessWidget {
 class CustomTextField extends StatelessWidget {
   const CustomTextField({
     Key? key,
-    this.placeholder = 'Login or email',
+    this.placeholder = 'email or phone number',
+    this.suffix,
+    // Добавили параметр controller в конструктор
+    this.controller,
   }) : super(key: key);
 
   final String placeholder;
+  final Widget? suffix;
+  // Создаём поле controller
+  final TextEditingController? controller;
+
   @override
   Widget build(BuildContext context) {
-    return const CupertinoTextField(
-      placeholder: 'Login or mail',
-      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 19),
-      decoration: BoxDecoration(color: AppColors.white),
+    return CupertinoTextField(
+      // Передаем controller в CupertinoTextField
+      controller: controller,
+      placeholder: placeholder,
+      decoration: BoxDecoration(
+        color: CupertinoColors.white,
+      ),
+      padding: const EdgeInsets.symmetric(vertical: 19, horizontal: 16),
+      suffix: suffix,
     );
   }
 }
