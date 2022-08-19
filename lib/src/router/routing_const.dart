@@ -1,4 +1,6 @@
-const String MainRoute = '/';
+const String mainRoute = '/main';
 
-const String AuthRoute = '/auth/login';
-const String RegisterRoute = '/auth/register';
+const String authRoute = '/auth/login';
+const String registerRoute = '/auth/register';
+const String detailRoute = '/';
+const String lentRoute = '/detail';
