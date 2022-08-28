@@ -1,5 +1,4 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables
-import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:test_app/src/common/constants/color_constants.dart';
 import 'package:test_app/src/common/constants/padding_constants.dart';
@@ -10,14 +9,12 @@ import 'dart:convert';
 class AuthScreen extends StatefulWidget {
   const AuthScreen({Key? key}) : super(key: key);
 
-
   @override
   State<AuthScreen> createState() => _AuthScreenState();
 }
 
 class _AuthScreenState extends State<AuthScreen> {
-  void requestMethod() async {
-  }
+  void requestMethod() async {}
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   @override
@@ -51,7 +48,7 @@ class _AuthScreenState extends State<AuthScreen> {
                       controller: passwordController,
                       placeholder: 'password',
                       padding: AppPaddings.textFieldPaddings,
-                      decoration: BoxDecoration(color: AppColors.white),
+                      decoration: const BoxDecoration(color: AppColors.white),
                     ),
                   ],
                 )),
@@ -65,8 +62,8 @@ class _AuthScreenState extends State<AuthScreen> {
                 color: AppColors.main,
                 onPressed: () async {
                   print(emailController.text);
-                  final response =
-                  await http.get(Uri.https('jsonplaceholder.typicode.com', '/albums/1'));
+                  final response = await http
+                      .post(Uri.https('jsonplaceholder.typicode.com', '/'));
                   try {
                     if (response.statusCode == 200) {
                       final utfDecoded = utf8.decode(response.bodyBytes);
@@ -75,24 +72,23 @@ class _AuthScreenState extends State<AuthScreen> {
                       print("print");
                     }
                     Navigator.pushReplacementNamed(context, mainRoute);
-                  }catch(e){
+                  } catch (e) {
                     showCupertinoModalPopup(
                         context: context,
-                        builder: (context){
+                        builder: (context) {
                           return CupertinoAlertDialog(
-                              title: Text('Error'),
-                            content: Text('Wrong login and password'),
+                            title: const Text('Error'),
+                            content: const Text('Wrong login and password'),
                             actions: [
                               CupertinoButton(
-                              child: Text('OK'),
-                              onPressed:() => Navigator.pop(context),
+                                child: const Text('OK'),
+                                onPressed: () => Navigator.pop(context),
                               ),
-                          ],
+                            ],
                           );
-                        }
-                    );
-                    throw e;
-                  };
+                        });
+                    rethrow;
+                  }
                 },
                 child: const Text(
                   'Log in',
@@ -142,7 +138,7 @@ class CustomTextField extends StatelessWidget {
       // Передаем controller в CupertinoTextField
       controller: controller,
       placeholder: placeholder,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: CupertinoColors.white,
       ),
       padding: const EdgeInsets.symmetric(vertical: 19, horizontal: 16),

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "672024329413",
+    "project_id": "codeunion-d3ee0",
+    "storage_bucket": "codeunion-d3ee0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:672024329413:android:a376db75a84dbeaf2804ac",
+        "android_client_info": {
+          "package_name": "com.example.test_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "672024329413-fattmr9rf18nebso483g0gdpotu73qah.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB5xumZ-oqZOQpUupr2vzVSCSMahM3t8qY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "672024329413-fattmr9rf18nebso483g0gdpotu73qah.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
