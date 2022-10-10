@@ -1,0 +1,11 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\lib",
+    "\\lib\\src",
+    "\\lib\\src\\screens",
+    "\\lib\\src\\screens\\auth"
+  ],
+  "SelectedNode": "\\lib\\src\\screens\\auth\\auth_screen.dart",
+  "PreviewInSolutionExplorer": false
+}
