@@ -1,10 +1,9 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:test_app/src/common/constants/color_constants.dart';
 import 'package:test_app/src/common/constants/padding_constants.dart';
 import 'package:test_app/src/router/routing_const.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({Key? key}) : super(key: key);
@@ -14,6 +13,7 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
+  Dio dio = Dio();
   void requestMethod() async {}
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -84,34 +84,63 @@ class _AuthScreenState extends State<AuthScreen> {
                 padding: AppPaddings.buttonPaddings,
                 color: AppColors.main,
                 onPressed: () async {
-                  print(emailController.text);
-                  final response = await http
-                      .post(Uri.https('jsonplaceholder.typicode.com', '/'));
                   try {
-                    if (response.statusCode == 200) {
-                      final utfDecoded = utf8.decode(response.bodyBytes);
-                      print(utfDecoded);
-                    } else {
-                      print("print");
-                    }
+                    Response response = await dio.post(
+                      'http://188.225.83.80:6719/api/v1/auth/login',
+                      data: {
+                        'email': emailController.text,
+                        'password': passwordController.text,
+                      },
+                    );
+                    print(response.data['tokens']['accessToken']);
                     Navigator.pushReplacementNamed(context, mainRoute);
-                  } catch (e) {
+                  } on DioError catch (e) {
+                    print(e.response!.data);
                     showCupertinoModalPopup(
-                        context: context,
-                        builder: (context) {
-                          return CupertinoAlertDialog(
-                            title: const Text('Error'),
-                            content: const Text('Wrong login and password'),
-                            actions: [
-                              CupertinoButton(
-                                child: const Text('OK'),
-                                onPressed: () => Navigator.pop(context),
-                              ),
-                            ],
-                          );
-                        });
+                      context: context,
+                      builder: (context) {
+                        return CupertinoAlertDialog(
+                          title: const Text('Ошибка'),
+                          content: const Text('Неправильный логин или пароль!'),
+                          actions: [
+                            CupertinoButton(
+                              child: const Text('ОК'),
+                              onPressed: () => Navigator.pop(context),
+                            ),
+                          ],
+                        );
+                      },
+                    );
                     rethrow;
                   }
+                  // print(emailController.text);
+                  // final response = await http
+                  //     .post(Uri.https('jsonplaceholder.typicode.com', '/'));
+                  // try {
+                  //   if (response.statusCode == 200) {
+                  //     final utfDecoded = utf8.decode(response.bodyBytes);
+                  //     print(utfDecoded);
+                  //   } else {
+                  //     print("print");
+                  //   }
+                  //   Navigator.pushReplacementNamed(context, mainRoute);
+                  // } catch (e) {
+                  //   showCupertinoModalPopup(
+                  //       context: context,
+                  //       builder: (context) {
+                  //         return CupertinoAlertDialog(
+                  //           title: const Text('Error'),
+                  //           content: const Text('Wrong login and password'),
+                  //           actions: [
+                  //             CupertinoButton(
+                  //               child: const Text('OK'),
+                  //               onPressed: () => Navigator.pop(context),
+                  //             ),
+                  //           ],
+                  //         );
+                  //       });
+                  //   rethrow;
+                  // }
                 },
                 child: const Text(
                   'Log in',

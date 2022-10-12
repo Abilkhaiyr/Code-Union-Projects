@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:test_app/src/common/constants/color_constants.dart';
 import 'package:test_app/src/router/router.dart';
-import 'package:test_app/src/screens/auth/auth_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:test_app/src/screens/auth/auth_screen.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
