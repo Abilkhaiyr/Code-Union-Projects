@@ -1,6 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:test_app/src/common/constants/color_constants.dart';
-import 'package:test_app/src/router/routing_const.dart';
+import 'package:test_app/src/common/constants/padding_constants.dart';
+import 'package:test_app/src/common/constants/text_style_constants.dart';
+import 'package:test_app/src/common/widgets/custom_back_arrow_widget.dart';
+import 'package:test_app/src/common/widgets/text_field_divider.dart';
 
 class DetailScreen extends StatelessWidget {
   const DetailScreen({Key? key}) : super(key: key);
@@ -8,113 +13,122 @@ class DetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
-      child: SafeArea(
-        child: Column(
-          children: [
-            Stack(
-              children: [
-                Image.asset(
-                  'assets/images/esentai_2.png',
-                  fit: BoxFit.fitWidth,
-                  width: double.maxFinite,
-                ),
-                Column(
+      child: ListView(
+        shrinkWrap: true,
+        padding: EdgeInsets.zero,
+        children: [
+          Stack(
+            children: [
+              SingleChildScrollView(
+                physics: const ClampingScrollPhysics(),
+                scrollDirection: Axis.horizontal,
+                child: Row(
                   children: [
-                    const SizedBox(height: 23),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        CupertinoButton(child: Icon(CupertinoIcons.back), onPressed: () async{
-                          Navigator.pushNamed(context, lentRoute);
-                        }),
-                       const Text(
-                          "Esentai Mall",
-                          style: TextStyle(color: AppColors.white),
-                        ),
-                        Icon(CupertinoIcons.heart),
-                      ],
+                    CachedNetworkImage(
+                        height: 200,
+                        width: MediaQuery.of(context).size.width,
+                        fit: BoxFit.cover,
+                        imageUrl:
+                            'https://cdn.iconscout.com/icon/free/png-256/data-not-found-1965034-1662569.png')
+                  ],
+                ),
+              ),
+              Container(
+                height: kToolbarHeight * 2,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      CupertinoColors.black.withOpacity(.8),
+                      CupertinoColors.black.withOpacity(0),
+                    ],
+                  ),
+                ),
+              ),
+              SafeArea(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const CustomBackArrow(
+                      color: AppColors.white,
                     ),
+                    const Text(
+                      "Esentai Mall",
+                      style: TextStyle(color: AppColors.white),
+                    ),
+                    CupertinoButton(
+                      child: const Icon(CupertinoIcons.heart,
+                          color: AppColors.white),
+                      onPressed: () {},
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          Padding(
+            padding: AppPaddings.primary,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text('Description', style: descriptionTitleTextStyle),
+                const SizedBox(
+                  height: 3,
+                ),
+                const Text(
+                  'Text',
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: descriptionTextStyle,
+                ),
+                const SizedBox(height: 5),
+                CupertinoButton(
+                  minSize: 0,
+                  padding: EdgeInsets.zero,
+                  child: const Text('Подробнее',
+                      style: TextStyle(
+                          fontSize: 15, decoration: TextDecoration.underline)),
+                  onPressed: () {},
+                )
+              ],
+            ),
+          ),
+          const TextFieldDivider(),
+          Padding(
+            padding: AppPaddings.primary,
+            child: Column(
+              children: [
+                Row(
+                  children: const [
+                    Icon(
+                      CupertinoIcons.clock,
+                      color: CupertinoColors.black,
+                      size: 16,
+                    ),
+                    SizedBox(width: 14),
+                    Text('Работаем с 18:00 до 20:00'),
+                  ],
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                Row(
+                  children: const [
+                    Icon(
+                      CupertinoIcons.map_pin,
+                      color: CupertinoColors.black,
+                      size: 16,
+                    ),
+                    SizedBox(width: 14),
+                    Text('Аль Фараби'),
                   ],
                 ),
               ],
             ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  Text(
-                    "Описание",
-                    style: TextStyle(
-                      fontSize: 13,
-                      color: Color(0xFF929292),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 3,
-                  ),
-                  Text(
-                      "Новый способ обжарки хачапури только у нас И вкуснейшие салатики малибу и ..."),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Text(
-                    "Подробнее",
-                    style: TextStyle(
-                      fontSize: 13,
-                      color: Color(0xFF4631D2),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 19,
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              height: 1,
-              color: const Color(0xFFE0E6ED),
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 17, vertical: 19),
-              child: Column(
-                children: [
-                  Row(
-                    children: const [
-                      Icon(CupertinoIcons.clock),
-                      SizedBox(
-                        width: 12,
-                      ),
-                      Text(
-                        "Работаем с 20:00 до 18:00",
-                        style: TextStyle(fontSize: 16, fontFamily: 'Manrope'),
-                      )
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 14,
-                  ),
-                  Row(
-                    children: const [
-                      Icon(CupertinoIcons.placemark),
-                      SizedBox(
-                        width: 12,
-                      ),
-                      Text(
-                        "Аль-Фараби",
-                        style: TextStyle(fontSize: 16, fontFamily: 'Manrope'),
-                      )
-                    ],
-                  )
-                ],
-              ),
-            ),
-            Container(
-              height: 1,
-              color: const Color(0xFFE0E6ED),
-            ),
-          ],
-        ),
+          ),
+          const TextFieldDivider(),
+        ],
       ),
     );
   }

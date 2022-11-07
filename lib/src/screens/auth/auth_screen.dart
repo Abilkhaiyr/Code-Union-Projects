@@ -1,9 +1,12 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:test_app/src/common/constants/color_constants.dart';
 import 'package:test_app/src/common/constants/padding_constants.dart';
 import 'package:test_app/src/router/routing_const.dart';
+
+import '../../common/models/tokens_model.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({Key? key}) : super(key: key);
@@ -61,6 +64,10 @@ class _AuthScreenState extends State<AuthScreen> {
                 padding: AppPaddings.buttonPaddings,
                 color: AppColors.main,
                 onPressed: () async {
+                  Box tokensBox = Hive.box('tokens');
+                  tokensBox.put('access', 'testovaya_zapis');
+                  // Выводим значение access из Hive
+                  print(tokensBox.get('access'));
                   try {
                     Response response = await dio.post(
                       'http://188.225.83.80:6719/api/v1/auth/login',
@@ -69,7 +76,19 @@ class _AuthScreenState extends State<AuthScreen> {
                         'password': passwordController.text,
                       },
                     );
-                    print(response.data['tokens']['accessToken']);
+                    TokensModel tokensModel = TokensModel.fromJson(
+                      response.data['tokens'],
+                    );
+
+                    print(tokensModel.access);
+                    print(tokensModel.refresh);
+                    tokensBox.put(
+                        'access', response.data['tokens']['accessToken']);
+                    tokensBox.put(
+                        'refresh', response.data['tokens']['refreshToken']);
+
+                    // Выводим их
+
                     Navigator.pushReplacementNamed(context, mainRoute);
                   } on DioError catch (e) {
                     print(e.response!.data);

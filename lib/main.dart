@@ -1,25 +1,48 @@
 import 'package:flutter/cupertino.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:test_app/src/common/constants/color_constants.dart';
 import 'package:test_app/src/router/router.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:test_app/src/router/routing_const.dart';
 import 'package:test_app/src/screens/auth/auth_screen.dart';
 
-Future main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+void main() async {
+  await Hive.initFlutter();
+  await Hive.openBox('tokens');
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  String initialRoute = authRoute;
+  @override
+  void initState() {
+    // Получаем Box токенов
+
+    Box tokensBox = Hive.box('tokens');
+
+    // Делаем проверку если access или refresh токены равны 'null'
+    if (tokensBox.get('access') != null || tokensBox.get('refresh') != null) {
+      // Если пользователь будет авторизован, то в консоле отобразиться текст "Открываю MainScreen"
+      initialRoute = mainRoute;
+      print("Открываю MainScreen");
+    }
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return const CupertinoApp(
+    return CupertinoApp(
       debugShowCheckedModeBanner: false,
-      home: AuthScreen(),
+      initialRoute: initialRoute,
+      home: const AuthScreen(),
       onGenerateRoute: AppRouter.generateRoute,
-      theme: CupertinoThemeData(
+      theme: const CupertinoThemeData(
         scaffoldBackgroundColor: AppColors.scaffoldBackground,
       ),
     );

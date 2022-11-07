@@ -1,9 +1,18 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:test_app/src/common/constants/color_constants.dart';
+import 'package:test_app/src/router/routing_const.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
 
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
@@ -17,14 +26,21 @@ class ProfileScreen extends StatelessWidget {
           child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          const SizedBox(height: 32),
           Column(
             children: [
-              Container(
-                padding: const EdgeInsets.only(top: 32),
-                child: const Icon(
-                  CupertinoIcons.person_crop_circle,
-                  size: 128,
-                  color: CupertinoColors.black,
+              CircleAvatar(
+                backgroundColor: AppColors.white,
+                radius: 36,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(360),
+                  child: CachedNetworkImage(
+                    imageUrl:
+                        'https://mir-s3-cdn-cf.behance.net/projects/404/c33c1899224199.Y3JvcCwzMjMyLDI1MjgsMCww.jpg',
+                    width: 72,
+                    height: 72,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
               const SizedBox(
@@ -43,23 +59,42 @@ class ProfileScreen extends StatelessWidget {
               const Text(
                 "maripbek.chingiz@gmail.com",
                 style: TextStyle(color: Color(0xFF929292)),
-              )
+              ),
             ],
           ),
           const SizedBox(
             height: 27,
           ),
-          CupertinoButton(
-            onPressed: () {},
+          Container(
             color: AppColors.white,
-            child: const Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                "Exit",
-                style: TextStyle(color: CupertinoColors.systemRed),
-              ),
+            child: Column(
+              children: [
+                CupertinoButton(
+                  child: const Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'Выход',
+                      style: TextStyle(
+                        color: AppColors.red,
+                      ),
+                    ),
+                  ),
+                  onPressed: () async {
+                    Box tokensBox = Hive.box('tokens');
+                    tokensBox.delete('access');
+                    tokensBox.delete('refresh');
+
+                    Navigator.of(
+                      context,
+                      rootNavigator: true,
+                    ).pushReplacementNamed(
+                      authRoute,
+                    );
+                  },
+                ),
+              ],
             ),
-          )
+          ),
         ],
       )),
     );
