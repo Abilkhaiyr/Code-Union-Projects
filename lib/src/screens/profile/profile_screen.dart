@@ -88,7 +88,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       context,
                       rootNavigator: true,
                     ).pushReplacementNamed(
-                      authRoute,
+                      AuthRoute,
                     );
                   },
                 ),

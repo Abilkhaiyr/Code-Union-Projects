@@ -19,7 +19,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String initialRoute = authRoute;
+  String initialRoute = AuthRoute;
   @override
   void initState() {
     // Получаем Box токенов
@@ -29,7 +29,7 @@ class _MyAppState extends State<MyApp> {
     // Делаем проверку если access или refresh токены равны 'null'
     if (tokensBox.get('access') != null || tokensBox.get('refresh') != null) {
       // Если пользователь будет авторизован, то в консоле отобразиться текст "Открываю MainScreen"
-      initialRoute = mainRoute;
+      initialRoute = MainRoute;
       print("Открываю MainScreen");
     }
     super.initState();

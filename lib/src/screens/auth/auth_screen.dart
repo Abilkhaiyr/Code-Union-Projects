@@ -1,12 +1,13 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:test_app/src/common/constants/color_constants.dart';
 import 'package:test_app/src/common/constants/padding_constants.dart';
+import 'package:test_app/src/common/models/tokens_model.dart';
 import 'package:test_app/src/router/routing_const.dart';
-
-import '../../common/models/tokens_model.dart';
+import 'package:test_app/src/screens/auth/bloc/log_in_bloc.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({Key? key}) : super(key: key);
@@ -60,88 +61,71 @@ class _AuthScreenState extends State<AuthScreen> {
             ),
             Padding(
               padding: AppPaddings.horizontal,
-              child: CupertinoButton(
-                padding: AppPaddings.buttonPaddings,
-                color: AppColors.main,
-                onPressed: () async {
-                  Box tokensBox = Hive.box('tokens');
-                  tokensBox.put('access', 'testovaya_zapis');
-                  // Выводим значение access из Hive
-                  print(tokensBox.get('access'));
-                  try {
-                    Response response = await dio.post(
-                      'http://188.225.83.80:6719/api/v1/auth/login',
-                      data: {
-                        'email': emailController.text,
-                        'password': passwordController.text,
-                      },
-                    );
-                    TokensModel tokensModel = TokensModel.fromJson(
-                      response.data['tokens'],
-                    );
-
-                    print(tokensModel.access);
-                    print(tokensModel.refresh);
-                    tokensBox.put(
-                        'access', response.data['tokens']['accessToken']);
-                    tokensBox.put(
-                        'refresh', response.data['tokens']['refreshToken']);
-
-                    // Выводим их
-
-                    Navigator.pushReplacementNamed(context, mainRoute);
-                  } on DioError catch (e) {
-                    print(e.response!.data);
-                    showCupertinoModalPopup(
-                      context: context,
-                      builder: (context) {
-                        return CupertinoAlertDialog(
-                          title: const Text('Ошибка'),
-                          content: const Text('Неправильный логин или пароль!'),
-                          actions: [
-                            CupertinoButton(
-                              child: const Text('ОК'),
-                              onPressed: () => Navigator.pop(context),
+              child: BlocBuilder<LogInBloc, LogInState>(
+                builder: (context, state) {
+                  return CupertinoButton(
+                    padding: AppPaddings.buttonPaddings,
+                    color: AppColors.main,
+                    onPressed: () async {
+                      context.read<LogInBloc>().add(
+                            LogInPressed(
+                              email: emailController.text,
+                              password: passwordController.text,
                             ),
-                          ],
+                          );
+                      Box tokensBox = Hive.box('tokens');
+                      tokensBox.put('access', 'testovaya_zapis');
+                      // Выводим значение access из Hive
+                      print(tokensBox.get('access'));
+                      try {
+                        Response response = await dio.post(
+                          'http://188.225.83.80:6719/api/v1/auth/login',
+                          data: {
+                            'email': emailController.text,
+                            'password': passwordController.text,
+                          },
                         );
-                      },
-                    );
-                    rethrow;
-                  }
-                  // print(emailController.text);
-                  // final response = await http
-                  //     .post(Uri.https('jsonplaceholder.typicode.com', '/'));
-                  // try {
-                  //   if (response.statusCode == 200) {
-                  //     final utfDecoded = utf8.decode(response.bodyBytes);
-                  //     print(utfDecoded);
-                  //   } else {
-                  //     print("print");
-                  //   }
-                  //   Navigator.pushReplacementNamed(context, mainRoute);
-                  // } catch (e) {
-                  //   showCupertinoModalPopup(
-                  //       context: context,
-                  //       builder: (context) {
-                  //         return CupertinoAlertDialog(
-                  //           title: const Text('Error'),
-                  //           content: const Text('Wrong login and password'),
-                  //           actions: [
-                  //             CupertinoButton(
-                  //               child: const Text('OK'),
-                  //               onPressed: () => Navigator.pop(context),
-                  //             ),
-                  //           ],
-                  //         );
-                  //       });
-                  //   rethrow;
-                  // }
+                        TokensModel tokensModel = TokensModel.fromJson(
+                          response.data['tokens'],
+                        );
+
+                        print(tokensModel.access);
+                        print(tokensModel.refresh);
+                        tokensBox.put(
+                            'access', response.data['tokens']['accessToken']);
+                        tokensBox.put(
+                            'refresh', response.data['tokens']['refreshToken']);
+
+                        // Выводим их
+
+                        Navigator.pushReplacementNamed(context, MainRoute);
+                      } on DioError catch (e) {
+                        print(e.response!.data);
+                        showCupertinoModalPopup(
+                          context: context,
+                          builder: (context) {
+                            return CupertinoAlertDialog(
+                              title: const Text('Ошибка'),
+                              content:
+                                  const Text('Неправильный логин или пароль!'),
+                              actions: [
+                                CupertinoButton(
+                                  child: const Text('ОК'),
+                                  onPressed: () => Navigator.pop(context),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                        rethrow;
+                      }
+                    },
+                    child: const Text(
+                      'Log in',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  );
                 },
-                child: const Text(
-                  'Log in',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
               ),
             ),
             const SizedBox(
@@ -155,7 +139,7 @@ class _AuthScreenState extends State<AuthScreen> {
                 child: const Text('Sign in',
                     style: TextStyle(fontWeight: FontWeight.bold)),
                 onPressed: () async {
-                  Navigator.pushNamed(context, registerRoute);
+                  Navigator.pushNamed(context, RegisterRoute);
                 },
               ),
             ),
