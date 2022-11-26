@@ -7,4 +7,5 @@ class AppPaddings {
   static const EdgeInsets buttonPaddings = EdgeInsets.symmetric(vertical: 20);
   static const EdgeInsets buttonToRight = EdgeInsets.only(right: 32);
   static const EdgeInsets toLeft = EdgeInsets.only(right: 200);
+  static const EdgeInsets primary = EdgeInsets.all(16);
 }

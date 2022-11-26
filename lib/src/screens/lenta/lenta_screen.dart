@@ -49,7 +49,7 @@ class LentaScreen extends StatelessWidget {
                   return GestureDetector(
                     onTap: () {
                       print('gfdg');
-                      Navigator.pushNamed(context, detailRoute);
+                      Navigator.pushNamed(context, DetailRoute);
                       Navigator.push(
                           context,
                           MaterialPageRoute(
